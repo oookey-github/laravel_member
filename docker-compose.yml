@@ -1,0 +1,43 @@
+services:
+
+  # PHPコンテナ
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    ports:
+      - 5173:5173
+    volumes:
+      - ./src/:/app
+
+  # nginxコンテナ
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    # command: /sbin/init
+    ports:
+      - 8080:80
+    depends_on:
+      - app
+    volumes:
+      - ./src/:/app
+
+  # MySQLコンテナ
+  db:
+    build:
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: member_registration_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
+    volumes:
+      - db-volume:/var/lib/mysql
+
+volumes:
+  db-volume:
