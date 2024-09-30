@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('メールアドレスを確認してください') }}</div>
+                <div class="card-header">{{ __('メールアドレスの確認') }}</div>
 
                 <div class="card-body">
                     @if (session('resent'))
@@ -16,9 +16,11 @@
 
                     {{ __('続行する前に、確認リンクが記載されたメールをご確認ください。') }}
                     {{ __('メールが届いていない場合') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.send') }}">
+                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('ここをクリックして再送信してください') }}</button>.
+                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">
+                            {{ __('こちらをクリックして再送信してください') }}
+                        </button>
                     </form>
                 </div>
             </div>
